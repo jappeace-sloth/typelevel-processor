@@ -68,6 +68,7 @@ library
       Memory
       Plumbing
       Processor
+      RandomAccessMemory
   hs-source-dirs:
       src
 
