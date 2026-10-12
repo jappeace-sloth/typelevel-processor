@@ -63,12 +63,16 @@ library
   exposed-modules:
       ArithmeticLogicUnit
       Arithmetics
+      Assembler
       Bytewise
+      Computer
+      ControlUnit
       LogicGates
       Memory
       Plumbing
       Processor
       RandomAccessMemory
+      Reflection
   hs-source-dirs:
       src
 
