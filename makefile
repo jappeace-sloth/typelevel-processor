@@ -1,4 +1,6 @@
-OPTIMIZATION=-O0
+# -O1 rather than -O0: only the optimiser notices the processor's
+# dictionaries are unused, without it codegen triples the build time.
+OPTIMIZATION=-O1
 build:
 	cabal build all -j --ghc-options $(OPTIMIZATION)
 
