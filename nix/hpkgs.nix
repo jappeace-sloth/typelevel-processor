@@ -12,6 +12,7 @@ let
     fileset = pkgs.lib.fileset.unions [
       ../app
       ../src
+      ../test
       ../typelevel-processor.cabal
       ../LICENSE
       ../Readme.md
