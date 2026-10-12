@@ -60,7 +60,9 @@ data Statement
   | Literal Nat -- ^ A = n, as long as n fits in a byte
   | AddressOf Symbol -- ^ A = the address of a label, for jumping there
   | Assign [Target] Expression Jump -- ^ targets = expression ; jump
-  | Halt -- ^ A = here + 1, then jump there, onto itself, forever. The processor takes the hint and stops.
+  | Halt
+    -- ^ A = here + 1, then jump there, onto itself, forever. The processor takes the hint and stops.
+    -- Two words, because a jump goes wherever A points and pointing A somewhere is an instruction of its own.
 
 -- | Turn a program into ROM contents, starting at address zero.
 class Assemble (program :: [Statement]) (rom :: MemoryTree InstructionWord) | program -> rom

@@ -64,8 +64,10 @@ type family NoInstruction :: InstructionWord where
 -- | One clock cycle of nandgame's computer.
 --
 -- The control unit sees the current A, D and *A, and its result goes to
--- whichever of them the instruction picked. *A is stored at the old A, and
--- a jump goes to the old A too, everybody reads before anybody writes.
+-- whichever of them the instruction picked. Every circuit below is wired to
+-- the unprimed pc, a, d and ram, only the primed ones are new, so *A is
+-- stored at the old A and a jump goes to the old A too: everybody reads
+-- before anybody writes, no matter which constraint GHC solves first.
 --
 -- halted turns on when the next program counter equals the current one, a
 -- program jumping onto itself is never going to do anything interesting again.

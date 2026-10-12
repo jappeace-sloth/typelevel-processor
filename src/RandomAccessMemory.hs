@@ -53,9 +53,9 @@ instance Store rest word right right'
   => Store (T ': rest) word ('Branch left right) ('Branch left right')
 
 -- | RAM wakes up with nothing in it. Literally zero.
-class OrZero (found :: Maybe Byte) (value :: Byte) | found -> value
-instance OrZero 'Nothing ZeroByte
-instance OrZero ('Just value) value
+class ZeroWhenUntouched (found :: Maybe Byte) (value :: Byte) | found -> value
+instance ZeroWhenUntouched 'Nothing ZeroByte
+instance ZeroWhenUntouched ('Just value) value
 
 -- | nandgame's RAM: emits the byte at the address, and on the clock cycle it
 --   stores x there when st is on.
@@ -70,7 +70,7 @@ class Ram (address :: Byte) (st :: Axiom) (x :: Byte) (ram :: MemoryTree Byte)
 instance
   ( AddressBits address bits
   , Lookup bits ram found
-  , OrZero found out
+  , ZeroWhenUntouched found out
   , Register st x out next
   , Store bits next ram ram'
   ) => Ram address st x ram out ram'
