@@ -69,12 +69,16 @@ instance
   )
   => HalfFlop ('(st, d, cl) ': rem) ('(lst, d) ': prevOut)
 
-class FlipFlop (input  :: [ (Axiom, Axiom, Axiom) ]) (out :: [Axiom])
-instance FlipFlop '[] '[]
+-- | A data flip-flop: two latches in series, inputs are @(st, d, cl)@ ticks.
+--
+-- While cl is 0 the first latch stores d when st is 1, the second latch holds.
+-- While cl is 1 the second latch copies the first one, so the output only
+-- changes when the clock goes up.
+class FlipFlop (input  :: [ (Axiom, Axiom, Axiom) ]) (out :: [Axiom]) | input -> out
 instance (
           HalfFlop input hflops
         , Latch hflops ds
-        , Zip ds cls zipped
+        , Zip cls ds zipped
         , Latch zipped out
         , Third input cls
         ) => FlipFlop input  out
@@ -91,6 +95,10 @@ flipFlopNothingProof3 = nil
 flipFlopSetProof1 :: FlipFlop '[ '(F, F, F),  '(F, F, T), '(T, T, F)] '[ T, T, F] => b
 flipFlopSetProof1 = nil
 
+-- storing while the clock is low must not reach the output until the clock rises
+flipFlopHoldUntilClockProof :: FlipFlop '[ '(F, F, T), '(T, F, F), '(F, F, T), '(T, T, F)] '[ F, T, T, F] => b
+flipFlopHoldUntilClockProof = nil
+
 x :: Int
 x =
    latchStProof1
@@ -102,3 +110,4 @@ x =
    flipFlopNothingProof2
    flipFlopNothingProof3
    flipFlopSetProof1
+   flipFlopHoldUntilClockProof
