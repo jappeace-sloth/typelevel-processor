@@ -16,6 +16,7 @@ npins instead of stack and hpack.
 
 * An 8 bit processor running fizzbuzz in the type checker, plus the
   flip-flop fix it needed
+  [#1](https://github.com/jappeace/typelevel-processor/pull/1)
 
 ## 0.0.0
 
